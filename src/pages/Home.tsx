@@ -37,20 +37,8 @@ export default function Home() {
   const endPokemon = Math.min(currentPage * PAGE_SIZE, totalCount);
 
   return (
-    <Box sx={{ width: '100%', maxWidth: '1200px', mx: 'auto' }}>
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: 2,
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          mb: 3,
-          py: 1,
-        }}
-      >
-      </Box>
-
+    <Box className="w-full max-w-[1200px] mx-auto" sx={{ pt: 5 }}>
+  
       <Box
         sx={{
           display: 'flex',

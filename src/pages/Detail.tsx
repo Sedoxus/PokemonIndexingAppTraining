@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Card, Typography, Container, Grid, Box, Button } from '@mui/material';
+import { Card, Typography, Button } from '@mui/material';
 import axios from 'axios';
 
 type PokemonMove = {
@@ -45,63 +45,54 @@ export default function Detail() {
 
   if (!pokemon) {
     return (
-      <Typography variant="h5" align="center" sx={{ mt: 10 }}>
+      <Typography variant="h5" align="center" className="mt-20">
         Loading Data...
       </Typography>
     );
   }
 
   return (
-    <Container maxWidth="md" sx={{ mt: 8, mb: 5 }}>
+    <div className="max-w-4xl mx-auto mt-16 mb-10">
       <Card
         variant="outlined"
-        sx={{ p: { xs: 2, md: 5 }, borderRadius: 4, boxShadow: 2, borderColor: 'grey.700' }}
+        className="p-4 md:p-10 rounded-2xl shadow-md border-gray-700"
       >
-        <Button component={Link} to="/" variant="outlined" sx={{ mb: 3, fontWeight: 700, borderColor: 'grey.700', color: 'black' }}>
+        <Button 
+          component={Link} 
+          to="/" 
+          variant="outlined" 
+          className="mb-6 font-bold border-gray-700 text-black hover:bg-gray-100"
+        >
           Back to Home
         </Button>
         <Typography
           variant="h3"
           align="center"
           gutterBottom
-          sx={{ textTransform: 'capitalize', fontWeight: 800, mb: 4 }}
+          className="capitalize font-extrabold mb-8"
         >
           {pokemon.name}
         </Typography>
 
-        <Grid container spacing={4}>
-          <Grid size={{ xs: 12, md: 5 }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-              <Card variant="outlined" sx={{ p: 2, textAlign: 'center', borderRadius: 3, borderColor: 'grey.700' }}>
-                <Typography variant="subtitle1" color="text.secondary" gutterBottom sx={{ fontWeight: 700 }}>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+          <div className="md:col-span-5">
+            <div className="flex flex-col gap-6">
+              <Card variant="outlined" className="p-4 text-center rounded-xl border-gray-700">
+                <Typography variant="subtitle1" color="text.secondary" gutterBottom className="font-bold">
                   Official Artwork
                 </Typography>
                 <img
                   src={pokemon.sprites.other['official-artwork'].front_default ?? ''}
                   alt="Official Artwork"
-                  style={{ width: '100%', maxWidth: '200px', height: 'auto' }}
+                  className="w-full max-w-[200px] h-auto mx-auto"
                 />
               </Card>
 
-              <Card variant="outlined" sx={{ p: 2, borderRadius: 3, borderColor: 'grey.700' }}>
-                <Typography variant="subtitle1" color="text.secondary" gutterBottom sx={{ fontWeight: 700 }}>
+              <Card variant="outlined" className="p-4 rounded-xl border-gray-700">
+                <Typography variant="subtitle1" color="text.secondary" gutterBottom className="font-bold">
                   Sprites
                 </Typography>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: 2,
-                    overflowX: 'auto',
-                    pb: 1,
-                    '&::-webkit-scrollbar': {
-                      height: '8px',
-                    },
-                    '&::-webkit-scrollbar-thumb': {
-                      backgroundColor: '#616161',
-                      borderRadius: '4px',
-                    },
-                  }}
-                >
+                <div className="flex gap-4 overflow-x-auto pb-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:bg-gray-600 [&::-webkit-scrollbar-thumb]:rounded">
                   {Object.entries({
                     'Front': pokemon.sprites.front_default,
                     'Front Shiny': pokemon.sprites.front_shiny,
@@ -110,68 +101,64 @@ export default function Detail() {
                   })
                     .filter(([, url]) => url !== null)
                     .map(([label, url]) => (
-                      <Box
+                      <div
                         key={label}
-                        sx={{
-                          textAlign: 'center',
-                          minWidth: '80px',
-                          flexShrink: 0,
-                        }}
+                        className="text-center min-w-[80px] flex-shrink-0"
                       >
                         <img
                           src={url ?? ''}
                           alt={label}
-                          style={{ width: '80px', height: '80px', objectFit: 'contain' }}
+                          className="w-20 h-20 object-contain"
                         />
-                        <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 0.5, fontWeight: 700 }}>
+                        <Typography variant="caption" color="text.secondary" display="block" className="mt-1 font-bold">
                           {label}
                         </Typography>
-                      </Box>
+                      </div>
                     ))}
-                </Box>
+                </div>
               </Card>
-            </Box>
-          </Grid>
+            </div>
+          </div>
 
-          <Grid size={{ xs: 12, md: 7 }}>
+          <div className="md:col-span-7">
             <Card
               variant="outlined"
-              sx={{ p: 4, height: '100%', borderRadius: 3, display: 'flex', flexDirection: 'column', borderColor: 'grey.700' }}
+              className="p-8 h-full rounded-xl flex flex-col border-gray-700"
             >
-              <Box sx={{ mb: 3 }}>
-                <Typography variant="h6" sx={{ mb: 1, fontWeight: 700 }}>
+              <div className="mb-6">
+                <Typography variant="h6" className="mb-2 font-bold">
                   Pokedex ID: {pokemon.id}
                 </Typography>
-                <Typography variant="h6" sx={{ mb: 1, fontWeight: 700 }}>
+                <Typography variant="h6" className="mb-2 font-bold">
                   Height: {pokemon.height}
                 </Typography>
-                <Typography variant="h6" sx={{ mb: 1, fontWeight: 700 }}>
+                <Typography variant="h6" className="mb-2 font-bold">
                   Weight: {pokemon.weight}
                 </Typography>
-              </Box>
+              </div>
 
-              <Box>
-                <Typography variant="h6" sx={{ fontWeight: 800, mb: 2 }}>
+              <div>
+                <Typography variant="h6" className="font-extrabold mb-4">
                   Move:
                 </Typography>
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                <div className="flex flex-col gap-3">
                   {pokemon.moves.slice(0, 3).map((moveObj) => (
                     <Card
                       key={moveObj.move.name}
                       variant="outlined"
-                      sx={{ p: 1.5, borderRadius: 2, borderColor: 'grey.700' }}
+                      className="p-3 rounded-lg border-gray-700"
                     >
-                      <Typography variant="body1" align="center" sx={{ textTransform: 'capitalize', fontWeight: 700 }}>
+                      <Typography variant="body1" align="center" className="capitalize font-bold">
                         {moveObj.move.name}
                       </Typography>
                     </Card>
                   ))}
-                </Box>
-              </Box>
+                </div>
+              </div>
             </Card>
-          </Grid>
-        </Grid>
+          </div>
+        </div>
       </Card>
-    </Container>
+    </div>
   );
 }
